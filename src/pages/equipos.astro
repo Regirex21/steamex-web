@@ -1,0 +1,76 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Placeholder from '../components/Placeholder.astro';
+import PageHero from '../components/PageHero.astro';
+import { teams, instagramUrl } from '../data/teams';
+
+const grupos = [
+  { programa: 'FRC', titulo: 'Equipos FRC', detalle: 'FIRST Robotics Competition · preparatoria' },
+  { programa: 'FTC', titulo: 'Equipos FTC', detalle: 'FIRST Tech Challenge · secundaria y preparatoria' },
+] as const;
+---
+
+<Layout title="Equipos" description="Todos los equipos de la red Project STEAMex y sus cuentas de Instagram.">
+  <PageHero
+    tag="// Equipos"
+    title="Más de 30 equipos, cada uno con su identidad"
+    lead="Para conocerlos de cerca o pedir informes de ingreso, entra al Instagram de cada equipo."
+  />
+
+  {
+    grupos.map((g, gi) => {
+      const lista = teams.filter((t) => t.program === g.programa);
+      return (
+        <section class={`section ${gi % 2 ? 'band' : ''}`} aria-labelledby={`g-${g.programa}`}>
+          <div class="mx-auto max-w-6xl px-5">
+            <div class="flex flex-wrap items-baseline justify-between gap-2 border-b border-line pb-4">
+              <h2 id={`g-${g.programa}`} class="text-2xl font-bold md:text-3xl">{g.titulo}</h2>
+              <p class="tag">{g.detalle}</p>
+            </div>
+            <ul class="divide-y divide-line">
+              {lista.map((t) => {
+                const url = instagramUrl(t.instagram);
+                return (
+                  <li class="grid gap-6 py-8 md:grid-cols-[8rem_1fr_auto] md:items-center md:gap-10">
+                    <Placeholder label="LOGO" class="aspect-square w-32 text-xs" />
+                    <div>
+                      <h3 class="text-xl font-bold">
+                        {t.name}
+                        {t.number && <span class="ml-3 font-[family-name:var(--font-mono)] text-base font-normal text-amber">#{t.number}</span>}
+                      </h3>
+                      <p class="mt-1 font-[family-name:var(--font-mono)] text-sm uppercase tracking-wider text-hot">
+                        {t.program} · {t.city}
+                      </p>
+                      <p class="mt-3 max-w-2xl text-muted">{t.description}</p>
+                    </div>
+                    {url ? (
+                      <a href={url} rel="noopener" target="_blank" class="btn btn-secondary whitespace-nowrap text-center">
+                        Ver Instagram
+                      </a>
+                    ) : (
+                      <span class="btn whitespace-nowrap text-center" aria-disabled="true">
+                        Instagram por agregar
+                      </span>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </section>
+      );
+    })
+  }
+
+  <section class="section">
+    <div class="mx-auto max-w-6xl px-5">
+      <div class="hud flex flex-wrap items-center justify-between gap-6 p-8 md:p-10">
+        <div class="max-w-2xl">
+          <h2 class="text-2xl font-bold">¿Tu escuela quiere tener su propio equipo?</h2>
+          <p class="mt-3 text-muted">Cuéntanos de tu plantel y te explicamos cómo sumarte a la red.</p>
+        </div>
+        <a href="/contacto?tipo=escuela" class="btn btn-primary">Quiero armar un equipo</a>
+      </div>
+    </div>
+  </section>
+</Layout>

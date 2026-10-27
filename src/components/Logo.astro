@@ -1,0 +1,18 @@
+---
+// PLACEHOLDER del logotipo. Sustituir por el SVG oficial (isotipo de engrane + wordmark).
+interface Props {
+  light?: boolean;
+}
+const { light = false } = Astro.props;
+---
+
+<span class={`inline-flex items-center gap-3 ${light ? 'text-white' : 'text-ink'}`}>
+  <span
+    class={`grid h-11 w-11 place-items-center border-2 text-[0.55rem] font-display font-bold leading-none tracking-wider ${light ? 'border-white/70' : 'border-ink'}`}
+    aria-hidden="true">LOGO</span
+  >
+  <span class="font-display leading-none">
+    <span class="block text-[0.65rem] tracking-[0.35em]">PROJECT</span>
+    <span class="block text-xl font-extrabold tracking-wide">STEAMEX</span>
+  </span>
+</span>

@@ -1,0 +1,99 @@
+---
+import '@fontsource/orbitron/700.css';
+import '@fontsource/orbitron/800.css';
+import '@fontsource/source-sans-3/400.css';
+import '@fontsource/source-sans-3/600.css';
+import '@fontsource/source-sans-3/700.css';
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import { nav, site } from '../data/site';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const {
+  title,
+  description = 'Project STEAMex impulsa la educación STEAM en México a través de la robótica.',
+} = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#00181c" />
+    <title>{title === site.name ? title : `${title} | ${site.name}`}</title>
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-neon focus:px-4 focus:py-2 focus:text-deep"
+      >Saltar al contenido</a
+    >
+
+    <div class="brand-strip"></div>
+    <header class="border-b border-line bg-deep">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-8 gap-y-3 px-5 py-4">
+        <a href="/" aria-label="Project STEAMex, inicio"><Logo light /></a>
+        <nav aria-label="Principal">
+          <ul class="flex flex-wrap gap-x-7 gap-y-1">
+            {
+              nav.map((item) => {
+                const active = item.href === path;
+                return (
+                  <li>
+                    <a
+                      href={item.href}
+                      aria-current={active ? 'page' : undefined}
+                      class={`inline-block border-b-2 py-2 text-base font-semibold ${active ? 'border-neon text-white' : 'border-transparent text-muted hover:text-white'}`}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                );
+              })
+            }
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="contenido" class="flex-1">
+      <slot />
+    </main>
+
+    <footer class="border-t border-line bg-surface">
+      <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.3fr_1fr_1fr]">
+        <div>
+          <Logo light />
+          <p class="mt-5 max-w-sm text-muted">
+            Organización comunitaria juvenil que promueve la educación STEAM en México a través de la robótica.
+          </p>
+        </div>
+        <div>
+          <h2 class="tag">Navegación</h2>
+          <ul class="mt-4 space-y-2">
+            {nav.map((item) => <li><a class="text-muted hover:text-white" href={item.href}>{item.label}</a></li>)}
+          </ul>
+        </div>
+        <div>
+          <h2 class="tag">Contacto</h2>
+          <ul class="mt-4 space-y-2 text-muted">
+            <li><a class="hover:text-white" href={site.instagram.url} rel="noopener">Instagram {site.instagram.handle}</a></li>
+            <li>{site.email}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mx-auto max-w-6xl px-5" aria-hidden="true">
+        <div class="wordmark">STEAMEX</div>
+      </div>
+      <div class="border-t border-line px-5 py-5 text-center text-sm text-muted">
+        2026 Project STEAMex. Los equipos conservan su propia identidad y marca.
+      </div>
+    </footer>
+  </body>
+</html>

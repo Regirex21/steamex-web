@@ -1,0 +1,34 @@
+---
+// Engrane de línea fina, decorativo. Evoca el isotipo de la marca sin copiarlo.
+// Cuando haya SVG oficial del isotipo, se puede sustituir aquí.
+interface Props {
+  class?: string;
+}
+const { class: cls = '' } = Astro.props;
+
+const N = 18;
+const rOut = 100;
+const rIn = 86;
+const pts: string[] = [];
+for (let i = 0; i < N; i++) {
+  const a = (i / N) * Math.PI * 2;
+  const w = (Math.PI * 2) / N;
+  const spots: [number, number][] = [
+    [rIn, a - 0.3 * w],
+    [rOut, a - 0.15 * w],
+    [rOut, a + 0.15 * w],
+    [rIn, a + 0.3 * w],
+  ];
+  for (const [r, ang] of spots) {
+    pts.push(`${(Math.cos(ang) * r).toFixed(2)},${(Math.sin(ang) * r).toFixed(2)}`);
+  }
+}
+---
+
+<svg viewBox="-110 -110 220 220" class={cls} fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+  <polygon points={pts.join(' ')} stroke-linejoin="round"></polygon>
+  <circle r="62"></circle>
+  <circle r="54" stroke-dasharray="2 6"></circle>
+  <circle r="20"></circle>
+  <path d="M-34 14 L-8 -12 L-34 -38 M-12 14 L14 -12 L-12 -38" stroke-width="3" stroke-linecap="square"></path>
+</svg>

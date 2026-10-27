@@ -1,0 +1,81 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+---
+
+<Layout title="Contacto" description="Escríbenos si eres una escuela, una organización patrocinadora o un estudiante interesado.">
+  <PageHero
+    tag="// Contacto"
+    title="Hablemos"
+    lead="Cuéntanos quién eres y qué buscas. Te respondemos por correo para continuar la conversación."
+  />
+
+  <section class="section">
+    <div class="mx-auto grid max-w-6xl gap-14 px-5 md:grid-cols-[1fr_1.4fr]">
+      <dl class="space-y-8">
+        <div>
+          <dt class="tag">Correo</dt>
+          <dd class="mt-2 text-lg">{site.email}</dd>
+        </div>
+        <div>
+          <dt class="tag">Instagram</dt>
+          <dd class="mt-2 text-lg">
+            <a class="link" href={site.instagram.url} rel="noopener" target="_blank">{site.instagram.handle}</a>
+          </dd>
+        </div>
+      </dl>
+
+      <form id="form-contacto" class="hud space-y-6 p-6 md:p-8" novalidate>
+        <div>
+          <label for="tipo" class="block font-semibold">Soy</label>
+          <select id="tipo" name="tipo" class="field">
+            <option value="escuela">Una escuela que quiere armar un equipo</option>
+            <option value="patrocinador">Una empresa u organización que quiere patrocinar</option>
+            <option value="estudiante">Estudiante o familiar que quiere entrar a un equipo</option>
+            <option value="otro">Otro motivo</option>
+          </select>
+        </div>
+        <div>
+          <label for="nombre" class="block font-semibold">Nombre</label>
+          <input id="nombre" name="nombre" required autocomplete="name" class="field" />
+        </div>
+        <div>
+          <label for="organizacion" class="block font-semibold">Escuela u organización <span class="font-normal text-muted">(si aplica)</span></label>
+          <input id="organizacion" name="organizacion" autocomplete="organization" class="field" />
+        </div>
+        <div>
+          <label for="correo" class="block font-semibold">Correo electrónico</label>
+          <input id="correo" name="correo" type="email" required autocomplete="email" class="field" />
+        </div>
+        <div>
+          <label for="mensaje" class="block font-semibold">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" rows="5" required class="field"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+        <p class="text-sm text-muted" role="status" aria-live="polite">
+          Por ahora el envío abre tu programa de correo con el mensaje listo.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <script define:vars={{ email: site.email }}>
+    const form = document.getElementById('form-contacto');
+    const tipo = document.getElementById('tipo');
+    const param = new URLSearchParams(location.search).get('tipo');
+    if (param && [...tipo.options].some((o) => o.value === param)) tipo.value = param;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      const d = Object.fromEntries(new FormData(form));
+      const asunto = `Contacto web (${tipo.options[tipo.selectedIndex].text})`;
+      const cuerpo = `Nombre: ${d.nombre}\nOrganización: ${d.organizacion || '-'}\nCorreo: ${d.correo}\n\n${d.mensaje}`;
+      location.href = `mailto:${email}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+    });
+  </script>
+</Layout>

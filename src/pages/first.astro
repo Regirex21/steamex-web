@@ -1,0 +1,302 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Placeholder from '../components/Placeholder.astro';
+import CircuitBg from '../components/CircuitBg.astro';
+import Robot3D from '../components/Robot3D.astro';
+import SectionHead from '../components/SectionHead.astro';
+import ChevronRow from '../components/ChevronRow.astro';
+
+const programas = [
+  {
+    id: 'fll',
+    sigla: 'FLL',
+    color: 'var(--color-amber)',
+    nombre: 'FIRST LEGO League',
+    resumen: 'La puerta de entrada a la robótica.',
+    datos: [
+      ['Edades', 'De primaria a secundaria, según el nivel'],
+      ['Robot', 'Construido y programado con piezas LEGO'],
+      ['Equipo', 'Grupo pequeño con un coach adulto'],
+    ],
+    descripcion:
+      'Niñas y niños resuelven un reto con robots de LEGO, investigan un problema real de su comunidad y lo presentan ante jueces. Es el primer contacto con la ingeniería, la programación y el trabajo en equipo.',
+    competencia: [
+      'El robot cumple misiones sobre una mesa de juego',
+      'Un proyecto de innovación que propone una solución a un problema real',
+      'Evaluación de los valores FIRST en el trabajo del equipo',
+    ],
+    aprendes: ['Pensamiento lógico', 'Programación por bloques', 'Hablar en público', 'Trabajo en equipo'],
+    cta: { texto: 'Pregunta por equipos en tu zona', href: '/contacto?tipo=estudiante' },
+    foto: 'FOTO: equipo FLL con su robot de LEGO (16:7)',
+  },
+  {
+    id: 'ftc',
+    sigla: 'FTC',
+    color: 'var(--color-hot)',
+    nombre: 'FIRST Tech Challenge',
+    resumen: 'Diseñar, construir y programar un robot propio.',
+    datos: [
+      ['Edades', 'Secundaria y preparatoria (7° a 12° grado)'],
+      ['Robot', 'Mediano, cabe en un cubo de 45 cm al iniciar'],
+      ['Partidos', 'Alianzas de dos equipos'],
+    ],
+    descripcion:
+      'Los equipos diseñan, construyen y programan un robot que resuelve el reto de la temporada. Trabajan como un pequeño estudio de ingeniería: prototipan, miden, rediseñan y llegan a competencias donde forman alianzas con otros equipos.',
+    competencia: [
+      'Partidos en alianza contra otra pareja de equipos',
+      'Fase autónoma, donde el robot actúa solo con su programación',
+      'Entrevistas con jueces sobre diseño, estrategia y comunidad',
+    ],
+    aprendes: ['Mecánica y electrónica', 'Programación (bloques o Java)', 'Estrategia de juego', 'Manejo de presupuesto'],
+    cta: { texto: 'Ver equipos FTC de STEAMex', href: '/equipos#g-FTC' },
+    foto: 'FOTO: robot FTC en cancha o en el taller (16:7)',
+  },
+  {
+    id: 'frc',
+    sigla: 'FRC',
+    color: 'var(--color-neon)',
+    nombre: 'FIRST Robotics Competition',
+    resumen: 'El nivel más alto: robots de gran escala y equipos que operan como empresas.',
+    datos: [
+      ['Edades', 'Preparatoria (9° a 12° grado)'],
+      ['Robot', 'Gran escala, de decenas de kilos'],
+      ['Partidos', 'Alianzas de tres equipos, con eliminatorias'],
+    ],
+    descripcion:
+      'Es la competencia más grande del programa. En pocas semanas cada equipo diseña, fabrica y programa un robot, y además opera como una pequeña empresa: administra su presupuesto, busca patrocinadores, comunica y desarrolla proyectos de impacto en su comunidad.',
+    competencia: [
+      'Partidos en alianzas de tres equipos con fase autónoma y fase manual',
+      'Eliminatorias que definen a los finalistas del evento',
+      'Premios que valoran el impacto del equipo, como el Impact Award',
+    ],
+    aprendes: ['Ingeniería y fabricación', 'Programación de robots', 'Finanzas y patrocinios', 'Liderazgo y comunicación'],
+    cta: { texto: 'Ver equipos FRC de STEAMex', href: '/equipos#g-FRC' },
+    foto: 'FOTO: robot FRC en competencia o en el pit (16:7)',
+  },
+];
+
+const ficha = [
+  ['Fundación', '1989'],
+  ['Fundador', 'Dean Kamen'],
+  ['Tipo', 'Organización sin fines de lucro'],
+  ['Programas', 'FLL · FTC · FRC'],
+  ['Reto', 'Cambia cada temporada'],
+];
+
+const temporada = [
+  ['Lanzamiento del reto', 'FIRST revela el juego de la temporada y publica las reglas.'],
+  ['Diseño', 'El equipo analiza el reto, define estrategia y dibuja el robot.'],
+  ['Construcción', 'Se fabrica, se arma el cableado y se prueba cada mecanismo.'],
+  ['Programación', 'Se programa el modo autónomo y el control manual.'],
+  ['Competencia', 'Torneos, alianzas, eliminatorias y premios.'],
+];
+
+const valores = [
+  ['Descubrimiento', 'Explorar ideas nuevas y atreverse a probar.'],
+  ['Innovación', 'Usar creatividad y persistencia para resolver problemas.'],
+  ['Impacto', 'Aplicar lo aprendido para mejorar la comunidad.'],
+  ['Inclusión', 'Respetar las diferencias y abrir espacio a todas las personas.'],
+  ['Trabajo en equipo', 'Lograr más juntos que por separado.'],
+  ['Diversión', 'Disfrutar el proceso y celebrar lo que se logra.'],
+];
+
+const areas = ['Mecánica', 'Electrónica', 'Programación', 'Diseño', 'Finanzas', 'Marketing y comunicación'];
+---
+
+<Layout title="Qué es FIRST" description="Qué es FIRST y cómo funcionan sus programas de robótica: FIRST LEGO League, FIRST Tech Challenge y FIRST Robotics Competition.">
+  <!-- Portada -->
+  <section class="surface-hero border-b border-line">
+    <CircuitBg class="decor decor-right right-0 top-0 h-full w-[55%]" />
+    <div class="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 md:grid-cols-[1.15fr_1fr] md:py-24">
+      <div>
+        <p class="tag flex items-center gap-3"><ChevronRow /><span class="cursor">Qué es FIRST</span></p>
+        <h1 class="mt-5 text-4xl font-extrabold leading-[1.08] md:text-6xl">
+          Robótica que se aprende <span class="glow-text">compitiendo en equipo.</span>
+        </h1>
+        <p class="mt-7 max-w-xl text-xl text-muted">
+          FIRST tiene tres programas internacionales que llevan a jóvenes de la primera curiosidad a construir robots de
+          verdad. Aquí te explicamos cómo funciona cada nivel.
+        </p>
+        <div class="mt-10 flex flex-wrap gap-4">
+          <a href="#programas" class="btn btn-primary">Ver los programas</a>
+          <a href="/contacto?tipo=estudiante" class="btn btn-secondary">Quiero entrar a un equipo</a>
+        </div>
+      </div>
+      <Robot3D class="mx-auto w-full max-w-lg" />
+    </div>
+  </section>
+
+  <!-- Qué es FIRST -->
+  <section class="section">
+    <div class="mx-auto grid max-w-6xl gap-14 px-5 md:grid-cols-[1.15fr_1fr]">
+      <div>
+        <SectionHead tag="// 01 La organización" title="Una organización internacional para jóvenes" />
+        <div class="mt-6 space-y-4 text-lg">
+          <p>
+            FIRST son las siglas de For Inspiration and Recognition of Science and Technology. Fue fundada en 1989 por el
+            inventor Dean Kamen con una idea sencilla: que la ciencia y la ingeniería se vivan con la misma emoción que un
+            deporte.
+          </p>
+          <p class="text-muted">
+            Cada temporada, FIRST propone un reto distinto. Los equipos lo resuelven con robots y, por el camino, trabajan
+            con mentores, buscan recursos y ayudan a su comunidad.
+          </p>
+        </div>
+      </div>
+      <dl class="hud self-start font-[family-name:var(--font-mono)] text-sm">
+        {
+          ficha.map(([k, v], i) => (
+            <div class={`flex justify-between gap-6 px-5 py-4 ${i ? 'border-t border-line' : ''}`}>
+              <dt class="uppercase tracking-wider text-amber">{k}</dt>
+              <dd class="text-right">{v}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- Índice de programas -->
+  <section class="section band" id="programas">
+    <div class="mx-auto max-w-6xl px-5">
+      <SectionHead tag="// 02 Programas" title="Una ruta que crece con la edad" lead="Cada programa tiene su propio robot, sus reglas y su nivel de reto." />
+      <ol class="hairline-grid mt-12 md:grid-cols-3">
+        {
+          programas.map((p) => (
+            <li class="cell">
+              <a href={`#${p.id}`} class="group block h-full p-8">
+                <span class="font-display text-4xl font-extrabold" style={`color:${p.color}`}>{p.sigla}</span>
+                <h3 class="mt-3 text-lg font-bold">{p.nombre}</h3>
+                <p class="mt-2 text-muted">{p.resumen}</p>
+                <span class="mt-6 inline-block font-semibold text-neon underline-offset-4 group-hover:underline">Ver detalle →</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Detalle por programa -->
+  {
+    programas.map((p, i) => (
+      <section class={`section ${i % 2 ? 'band' : ''}`} id={p.id}>
+        <div class="mx-auto grid max-w-6xl gap-14 px-5 lg:grid-cols-[0.85fr_1.4fr]">
+          <div>
+            <p class="tag">// 0{i + 3} Programa</p>
+            <p
+              class="mt-4 font-display text-7xl font-extrabold leading-none md:text-8xl"
+              style={`color: transparent; -webkit-text-stroke: 1.5px ${p.color};`}
+              aria-hidden="true"
+            >
+              {p.sigla}
+            </p>
+            <h2 class="mt-5 text-2xl font-bold md:text-3xl">{p.nombre}</h2>
+            <p class="mt-2 text-muted">{p.resumen}</p>
+            <dl class="hud mt-8 font-[family-name:var(--font-mono)] text-sm" style={`--hud:${p.color}`}>
+              {p.datos.map(([k, v], j) => (
+                <div class={`grid gap-1 px-5 py-4 sm:grid-cols-[6rem_1fr] ${j ? 'border-t border-line' : ''}`}>
+                  <dt class="uppercase tracking-wider" style={`color:${p.color}`}>{k}</dt>
+                  <dd>{v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <div>
+            <p class="text-lg">{p.descripcion}</p>
+            <div class="mt-10 grid gap-10 md:grid-cols-2">
+              <div>
+                <h3 class="font-[family-name:var(--font-mono)] text-xs uppercase tracking-[0.14em] text-hot">Cómo se compite</h3>
+                <ul class="mt-4 space-y-2 text-muted">
+                  {p.competencia.map((c) => <li class="grid grid-cols-[1rem_1fr] gap-2"><span style={`color:${p.color}`}>›</span><span>{c}</span></li>)}
+                </ul>
+              </div>
+              <div>
+                <h3 class="font-[family-name:var(--font-mono)] text-xs uppercase tracking-[0.14em] text-hot">Qué se aprende</h3>
+                <ul class="mt-4 space-y-2 text-muted">
+                  {p.aprendes.map((c) => <li class="grid grid-cols-[1rem_1fr] gap-2"><span style={`color:${p.color}`}>›</span><span>{c}</span></li>)}
+                </ul>
+              </div>
+            </div>
+            <Placeholder bevel label={p.foto} class="mt-10 aspect-[16/7] w-full" />
+            <a href={p.cta.href} class="link mt-8 inline-block">{p.cta.texto} →</a>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <!-- Una temporada -->
+  <section class="section">
+    <div class="mx-auto max-w-6xl px-5">
+      <SectionHead tag="// 06 Temporada" title="Del reto a la competencia, en cinco etapas" />
+      <ol class="mt-12 grid gap-8 md:grid-cols-5">
+        {
+          temporada.map(([t, d], i) => (
+            <li class="relative border-t border-amber/50 pt-5">
+              <span class="absolute -top-[4px] left-0 h-[7px] w-[7px] bg-amber"></span>
+              <span class="font-[family-name:var(--font-mono)] text-sm text-amber">0{i + 1}</span>
+              <h3 class="mt-2 text-lg font-bold">{t}</h3>
+              <p class="mt-1 text-base text-muted">{d}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="mt-10 text-sm text-muted">Las fechas cambian por programa y por temporada. Cada equipo sigue el calendario oficial de FIRST.</p>
+    </div>
+  </section>
+
+  <!-- Más allá del robot -->
+  <section class="section band">
+    <div class="mx-auto grid max-w-6xl gap-14 px-5 md:grid-cols-2">
+      <div>
+        <SectionHead tag="// 07 Más allá del robot" title="Un equipo es mucho más que mecánica" />
+        <p class="mt-6 text-lg text-muted">
+          Un equipo FIRST necesita ingeniería, pero también finanzas, diseño y comunicación. Por eso hay lugar para
+          estudiantes con intereses muy distintos.
+        </p>
+      </div>
+      <ul class="hairline-grid grid-cols-2 self-start">
+        {areas.map((a) => <li class="cell px-5 py-6 font-semibold">{a}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Valores -->
+  <section class="section">
+    <div class="mx-auto max-w-6xl px-5">
+      <SectionHead
+        tag="// 08 Valores"
+        title="Se compite fuerte y se ayuda a los demás"
+        lead="El profesionalismo cortés (Gracious Professionalism) significa competir con respeto. La coopetición (Coopertition) significa ayudar incluso a quien compite contra ti."
+      />
+      <ul class="hairline-grid mt-12 md:grid-cols-3">
+        {
+          valores.map(([t, d]) => (
+            <li class="cell p-7">
+              <h3 class="text-lg font-bold">{t}</h3>
+              <p class="mt-2 text-muted">{d}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Cierre -->
+  <section class="section border-t border-line">
+    <div class="mx-auto max-w-6xl px-5">
+      <div class="hud flex flex-wrap items-center justify-between gap-6 p-8 md:p-10">
+        <div class="max-w-2xl">
+          <h2 class="text-2xl font-bold">¿Listo para entrar a la red?</h2>
+          <p class="mt-3 text-muted">Conoce los equipos de STEAMex o cuéntanos si tu escuela quiere abrir uno.</p>
+        </div>
+        <div class="flex flex-wrap gap-4">
+          <a href="/equipos" class="btn btn-primary">Ver equipos</a>
+          <a href="/contacto?tipo=escuela" class="btn btn-secondary">Abrir un equipo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

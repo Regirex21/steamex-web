@@ -1,0 +1,13 @@
+---
+// Marcador de foto o logo pendiente. Reemplazar por <img class="bevel ..."> cuando haya material.
+interface Props {
+  label: string;
+  class?: string;
+  bevel?: boolean;
+}
+const { label, class: cls = '', bevel = false } = Astro.props;
+---
+
+<div class={`placeholder ${bevel ? 'bevel' : ''} ${cls}`} role="img" aria-label={`Espacio reservado: ${label}`}>
+  <span>{label}</span>
+</div>

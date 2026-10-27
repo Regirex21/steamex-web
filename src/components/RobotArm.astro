@@ -1,0 +1,69 @@
+---
+// Brazo robótico en línea con lecturas tipo telemetría. Ilustración decorativa propia.
+interface Props {
+  class?: string;
+}
+const { class: cls = '' } = Astro.props;
+
+// Eslabones: [x1, y1, x2, y2]
+const links: [number, number, number, number][] = [
+  [210, 322, 140, 196],
+  [140, 196, 250, 108],
+  [250, 108, 328, 138],
+];
+const joints: [number, number][] = [
+  [210, 322],
+  [140, 196],
+  [250, 108],
+  [328, 138],
+];
+---
+
+<svg viewBox="0 0 440 420" class={cls} fill="none" role="img" aria-label="Ilustración de un brazo robótico sosteniendo una pieza de juego">
+  <!-- base -->
+  <rect x="100" y="372" width="220" height="24" rx="3" stroke="var(--color-neon)" stroke-width="2" fill="var(--color-deep)"></rect>
+  <rect x="150" y="344" width="120" height="28" rx="3" stroke="var(--color-neon)" stroke-width="2" fill="var(--color-deep)"></rect>
+  {[118, 302].map((x) => <circle cx={x} cy="384" r="3.5" fill="var(--color-neon)" />)}
+
+  <!-- eslabones (tubo con contorno neón) -->
+  {
+    links.map(([x1, y1, x2, y2]) => (
+      <>
+        <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--color-neon)" stroke-width="28" stroke-linecap="round" />
+        <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--color-deep)" stroke-width="24" stroke-linecap="round" />
+        <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--color-neon)" stroke-width="1.5" stroke-dasharray="3 9" opacity="0.7" />
+      </>
+    ))
+  }
+
+  <!-- pinza -->
+  <polyline points="328,138 366,108 386,122" stroke="var(--color-neon)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></polyline>
+  <polyline points="328,138 366,108 386,122" stroke="var(--color-deep)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></polyline>
+  <polyline points="328,138 366,168 386,154" stroke="var(--color-neon)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></polyline>
+  <polyline points="328,138 366,168 386,154" stroke="var(--color-deep)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></polyline>
+
+  <!-- pieza de juego -->
+  <circle cx="392" cy="138" r="15" stroke="var(--color-hot)" stroke-width="2.5" fill="rgba(255,90,85,0.12)"></circle>
+  <circle cx="392" cy="138" r="6" stroke="var(--color-hot)" stroke-width="1.5"></circle>
+
+  <!-- articulaciones -->
+  {
+    joints.map(([x, y]) => (
+      <>
+        <circle cx={x} cy={y} r="17" fill="var(--color-deep)" stroke="var(--color-neon)" stroke-width="2.5" />
+        <circle cx={x} cy={y} r="6" fill="var(--color-neon)" />
+      </>
+    ))
+  }
+
+  <!-- lecturas de telemetría -->
+  <g font-family="Consolas, monospace" font-size="11" fill="var(--color-neon)" opacity="0.85">
+    <path d="M165 322 A45 45 0 0 0 199 285" stroke="var(--color-neon)" stroke-width="1.2" stroke-dasharray="3 3"></path>
+    <text x="40" y="262">J1  +61.0°</text>
+    <text x="30" y="188">J2  -38.5°</text>
+    <text x="236" y="82">J3  +24.0°</text>
+    <text x="316" y="196">GRIP  CERRADO</text>
+    <text x="40" y="60" opacity="0.7">SYS // ONLINE</text>
+    <text x="40" y="76" opacity="0.7">MOTORES 4/4</text>
+  </g>
+</svg>

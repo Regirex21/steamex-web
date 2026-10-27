@@ -1,0 +1,17 @@
+---
+// Encabezado de sección único para todo el sitio: línea superior, etiqueta, título y entrada.
+interface Props {
+  tag?: string;
+  title: string;
+  lead?: string;
+  id?: string;
+}
+const { tag, title, lead, id } = Astro.props;
+---
+
+<div class="max-w-3xl">
+  <div class="superline" aria-hidden="true"></div>
+  {tag && <p class="tag">{tag}</p>}
+  <h2 id={id} class="mt-4 text-3xl font-bold md:text-4xl">{title}</h2>
+  {lead && <p class="mt-5 text-lg text-muted">{lead}</p>}
+</div>

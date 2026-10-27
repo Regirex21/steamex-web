@@ -1,0 +1,57 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Placeholder from '../components/Placeholder.astro';
+import PageHero from '../components/PageHero.astro';
+import { temporadas } from '../data/destacados';
+
+const programas = [
+  { clave: 'ftc', titulo: 'Top 3 FTC' },
+  { clave: 'frc', titulo: 'Top 3 FRC' },
+] as const;
+---
+
+<Layout title="Destacados" description="Los tres equipos STEAMex más destacados de cada temporada en FTC y FRC.">
+  <PageHero
+    tag="// Destacados"
+    title="Los mejores de cada temporada"
+    lead="Cada temporada reconocemos a los tres mejores equipos STEAMex de FTC y a los tres de FRC, con sus logros y lo que los hizo competitivos."
+  />
+
+  {
+    temporadas.map((t, ti) => (
+      <section class={`section ${ti % 2 ? 'band' : ''}`}>
+        <div class="mx-auto max-w-6xl px-5">
+          <h2 class="border-b border-line pb-4 text-2xl font-bold md:text-3xl">{t.nombre}</h2>
+          <div class="mt-12 grid gap-16 lg:grid-cols-2">
+            {programas.map((p) => (
+              <div>
+                <h3 class="tag">{p.titulo}</h3>
+                <ol class="mt-6 divide-y divide-line border-y border-line">
+                  {t[p.clave].map((d) => (
+                    <li class="grid gap-5 py-8 sm:grid-cols-[5.5rem_1fr]">
+                      <div>
+                        <span class="font-display text-5xl font-extrabold text-amber">{d.lugar}</span>
+                        <Placeholder label="LOGO" class="mt-3 aspect-square w-20 text-xs" />
+                      </div>
+                      <div>
+                        <h4 class="text-xl font-bold">{d.equipo}</h4>
+                        <p class="mt-4 font-[family-name:var(--font-mono)] text-xs uppercase tracking-wider text-hot">Logros</p>
+                        <ul class="mt-2 space-y-1 text-muted">
+                          {d.logros.map((l) => <li class="grid grid-cols-[1rem_1fr] gap-2"><span class="text-amber">›</span>{l}</li>)}
+                        </ul>
+                        <p class="mt-4 font-[family-name:var(--font-mono)] text-xs uppercase tracking-wider text-hot">Características</p>
+                        <ul class="mt-2 space-y-1 text-muted">
+                          {d.caracteristicas.map((c) => <li class="grid grid-cols-[1rem_1fr] gap-2"><span class="text-amber">›</span>{c}</li>)}
+                        </ul>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    ))
+  }
+</Layout>

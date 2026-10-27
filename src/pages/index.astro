@@ -1,0 +1,212 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Placeholder from '../components/Placeholder.astro';
+import Gear from '../components/Gear.astro';
+import CircuitBg from '../components/CircuitBg.astro';
+import SectionHead from '../components/SectionHead.astro';
+import ChevronRow from '../components/ChevronRow.astro';
+import { site, stats } from '../data/site';
+
+const nombre = [
+  ['PROJECT', 'Estructura, planeación y ejecución: el lugar donde las ideas se vuelven realidades concretas.'],
+  ['STEAM', 'Ciencia, Tecnología, Ingeniería, Arte y Matemáticas, trabajando juntas en un mismo proyecto.'],
+  ['EX', 'México, el origen nacional y regional de la comunidad.'],
+];
+
+const hacemos = [
+  ['Diseño y construcción de robots', 'Los estudiantes pasan de la idea al prototipo y del prototipo al robot que compite.'],
+  ['Planes de negocio y finanzas', 'Cada equipo administra su presupuesto, busca patrocinio y rinde cuentas.'],
+  ['Proyectos sociales', 'Los equipos desarrollan iniciativas para su comunidad, ligadas a los ODS de la ONU.'],
+  ['Capacitación y mentoría', 'Talleres y acompañamiento para que un equipo nuevo no empiece de cero.'],
+];
+
+const publicos = [
+  {
+    titulo: 'Soy una escuela',
+    texto: 'Quieres abrir un equipo de robótica en tu plantel. Te acompañamos con capacitación, mentoría y la guía para inscribirte.',
+    cta: 'Quiero armar un equipo',
+    href: '/contacto?tipo=escuela',
+  },
+  {
+    titulo: 'Soy una empresa u organización',
+    texto: 'Quieres apoyar el talento joven y ver resultados concretos. Armamos una propuesta de patrocinio a tu medida.',
+    cta: 'Ver cómo patrocinar',
+    href: '/patrocinadores',
+  },
+  {
+    titulo: 'Soy estudiante o familia',
+    texto: 'Quieres entrar a un equipo. Te mostramos los equipos activos y cómo contactar a cada uno por Instagram.',
+    cta: 'Ver los equipos',
+    href: '/equipos',
+  },
+];
+---
+
+<Layout title={site.name}>
+  <!-- Portada -->
+  <section class="surface-hero border-b border-line">
+    <CircuitBg class="decor decor-right right-0 top-0 h-full w-[60%]" />
+    <Gear class="decor spin-slow -left-40 top-16 h-[32rem] w-[32rem] text-white opacity-[0.04]" />
+    <div class="mx-auto grid max-w-6xl items-center gap-14 px-5 py-16 md:grid-cols-[1.2fr_1fr] md:py-28">
+      <div>
+        <p class="tag flex items-center gap-3"><ChevronRow /><span class="cursor">Project STEAMex</span></p>
+        <h1 class="mt-5 text-4xl font-extrabold leading-[1.08] md:text-6xl">
+          Más de 30 equipos de robótica. <span class="glow-text">Una sola red.</span>
+        </h1>
+        <p class="mt-7 max-w-xl text-xl text-muted">
+          Somos una organización comunitaria juvenil que acerca la educación STEAM a estudiantes de México con la
+          robótica. Cada equipo tiene su identidad. Todos comparten la misma familia.
+        </p>
+        <div class="mt-10 flex flex-wrap gap-4">
+          <a href="/equipos" class="btn btn-primary">Conoce a los equipos</a>
+          <a href="/patrocinadores" class="btn btn-secondary">Patrocina un equipo</a>
+        </div>
+      </div>
+
+      <dl class="glass grid grid-cols-2">
+        {
+          stats.map((s) => (
+            <div class="flex flex-col border-line p-6 [&:nth-child(-n+2)]:border-b [&:nth-child(odd)]:border-r">
+              <dt class="order-2 mt-2 text-base leading-snug text-muted">{s.etiqueta}</dt>
+              <dd class="font-display text-4xl font-extrabold md:text-5xl">
+                {(() => { const m = String(s.valor).match(/^(\+?)(\d+)$/); return !s.pendiente && m ? <span class="text-neon" data-count={m[2]} data-prefix={m[1]}>{s.valor}</span> : <span class={s.pendiente ? 'text-white' : 'text-neon'}>{s.valor}</span>; })()}
+                {s.pendiente && <span class="mt-2 block font-[family-name:var(--font-mono)] text-xs uppercase tracking-wider text-hot">por confirmar</span>}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- Quiénes somos -->
+  <section class="section">
+    <div class="mx-auto max-w-6xl px-5">
+      <div class="grid gap-14 md:grid-cols-2">
+        <SectionHead tag="// 01 Quiénes somos" title="Qué es Project STEAMex" />
+        <div class="space-y-4 text-lg md:pt-10">
+          <p>
+            Somos una organización juvenil con sede en el Área Metropolitana de Monterrey. Cada año formamos a estudiantes en
+            diseño de robots, administración de planes de negocio y desarrollo de proyectos sociales.
+          </p>
+          <p class="text-muted">Somos aliados oficiales de los Objetivos de Desarrollo Sostenible de la ONU.</p>
+        </div>
+      </div>
+
+      <div class="mt-16 grid gap-12 md:grid-cols-[1fr_1.15fr] md:items-start">
+        <Placeholder bevel label="FOTO: equipos STEAMex juntos en un evento (3:2)" class="aspect-[3/2] w-full" />
+        <div>
+          <h3 class="text-xl font-bold">Una red de familia STEAM</h3>
+          <p class="mt-4 text-muted">
+            Cada equipo conserva su propio nombre, logo, mascota y colores. STEAMex lo respalda con su identidad, su red
+            de mentores, equipos hermanos y patrocinadores. Un equipo nuevo no empieza solo.
+          </p>
+          <dl class="mt-8 divide-y divide-line border-y border-line">
+            {
+              nombre.map(([k, v]) => (
+                <div class="grid gap-1 py-4 sm:grid-cols-[7.5rem_1fr]">
+                  <dt class="font-display text-sm font-bold tracking-widest text-amber">{k}</dt>
+                  <dd>{v}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Qué hacemos -->
+  <section class="section band">
+    <div class="mx-auto max-w-6xl px-5">
+      <SectionHead tag="// 02 Qué hacemos" title="Formamos jóvenes que construyen, administran y sirven" />
+      <ul class="hairline-grid mt-12 md:grid-cols-2">
+        {
+          hacemos.map(([t, d], i) => (
+            <li class="cell grid grid-cols-[3rem_1fr] gap-4 p-8">
+              <span class="font-[family-name:var(--font-mono)] text-sm text-amber">0{i + 1}</span>
+              <div>
+                <h3 class="text-lg font-bold">{t}</h3>
+                <p class="mt-2 text-muted">{d}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-10 text-muted">
+        ¿Quieres entender los programas de robótica en los que competimos? <a href="/first" class="link">Conoce qué es FIRST</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Tres públicos -->
+  <section class="section">
+    <div class="mx-auto max-w-6xl px-5">
+      <SectionHead tag="// 03 Cómo sumarte" title="Hay tres formas de entrar a la red" lead="Elige la que describe mejor tu caso." />
+      <ul class="mt-12 border-t border-line">
+        {
+          publicos.map((p, i) => (
+            <li class="grid gap-4 border-b border-line py-8 md:grid-cols-[4rem_1fr_1.5fr_auto] md:items-center md:gap-8">
+              <span class="font-[family-name:var(--font-mono)] text-sm text-amber">0{i + 1}</span>
+              <h3 class="text-xl font-bold">{p.titulo}</h3>
+              <p class="text-muted">{p.texto}</p>
+              <a href={p.href} class="btn btn-secondary whitespace-nowrap text-center">{p.cta}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Patrocinadores y alianzas -->
+  <section class="section band">
+    <div class="mx-auto max-w-6xl px-5">
+      <div class="flex flex-wrap items-end justify-between gap-8">
+        <SectionHead
+          tag="// 04 Alianzas"
+          title="Patrocinadores y aliados"
+          lead="Hacen posible la inscripción a competencias, los materiales de robótica y los talleres para nuevos estudiantes."
+        />
+        <a href="/patrocinadores" class="btn btn-primary">Beneficios de patrocinar</a>
+      </div>
+      <ul class="hairline-grid mt-12 grid-cols-2 md:grid-cols-5">
+        {
+          [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+            <li class="cell grid h-28 place-items-center px-4 text-center font-[family-name:var(--font-mono)] text-xs uppercase tracking-wider text-muted">
+              Logo aliado {i}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Destacados -->
+  <section class="section">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-end justify-between gap-8 px-5">
+      <SectionHead
+        tag="// 05 Temporada"
+        title="Los mejores de cada temporada"
+        lead="Reconocemos a los tres equipos STEAMex más destacados de FTC y de FRC, con sus logros y lo que los hizo competitivos."
+      />
+      <a href="/destacados" class="btn btn-secondary">Ver destacados</a>
+    </div>
+  </section>
+  <script>
+    // Contador de cifras al cargar. Se omite si el sistema pide reducir movimiento.
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
+        const target = Number(el.dataset.count);
+        const prefix = el.dataset.prefix ?? '';
+        const t0 = performance.now();
+        const dur = 1400;
+        const step = (t: number) => {
+          const p = Math.min((t - t0) / dur, 1);
+          el.textContent = prefix + Math.round(target * (1 - Math.pow(1 - p, 3)));
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    }
+  </script>
+</Layout>

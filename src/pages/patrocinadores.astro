@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import { site } from '../data/site';
+
+const beneficios = [
+  ['Visibilidad de marca', 'Logo en uniformes, robot, espacio de trabajo en competencia y materiales impresos.'],
+  ['Presencia en redes', 'Menciones y publicaciones sobre la alianza en las cuentas de STEAMex y de los equipos.'],
+  ['Reportes de impacto', 'Informes de avances y del impacto social, con datos para presentar internamente.'],
+  ['Eventos y competencias', 'Invitación a competencias, ceremonias y presentaciones de los equipos.'],
+  ['Talleres y mentoría', 'Participación de tu personal como mentores o ponentes en talleres para estudiantes.'],
+  ['Vinculación con talento joven', 'Contacto con estudiantes que se forman en ingeniería, programación, negocios y comunicación.'],
+  ['Alineación con los ODS', 'Una causa educativa ligada a los Objetivos de Desarrollo Sostenible de la ONU, de los que somos aliados oficiales.'],
+  ['Reconocimiento en este sitio', 'Espacio para tu marca en la sección de patrocinadores y aliados.'],
+];
+
+const pasos = [
+  ['Contacto', 'Nos escribes y nos cuentas qué busca tu organización.'],
+  ['Llamada', 'Platicamos sobre objetivos, presupuesto y tiempos.'],
+  ['Propuesta', 'Preparamos una propuesta con los beneficios que sí encajan contigo.'],
+  ['Acuerdo', 'Formalizamos la alianza para la temporada.'],
+  ['Reporte', 'Te entregamos avances y resultados con tu marca visible.'],
+];
+---
+
+<Layout title="Patrocinadores" description="Beneficios de patrocinar a los equipos de Project STEAMex y cómo se arma una propuesta personalizada.">
+  <PageHero
+    tag="// Patrocinadores"
+    title="Patrocinar talento joven en robótica"
+    lead="Tu aportación financia inscripciones a competencias, materiales y talleres. A cambio, tu organización se une a una red de más de 30 equipos con resultados que se pueden medir."
+  >
+    <a href="/contacto?tipo=patrocinador" class="btn btn-primary">Agendar una llamada</a>
+    {
+      site.dossierUrl ? (
+        <a href={site.dossierUrl} class="btn btn-secondary">Descargar dossier</a>
+      ) : (
+        <span class="btn" aria-disabled="true">Dossier próximamente</span>
+      )
+    }
+  </PageHero>
+
+  <section class="section">
+    <div class="mx-auto max-w-6xl px-5">
+      <SectionHead tag="// 01 Beneficios" title="Beneficios de patrocinar" />
+
+      <div class="hud mt-10 max-w-3xl p-6 md:p-7">
+        <p class="text-lg font-semibold">
+          Cada patrocinio se basa en una propuesta personalizada. No todos los beneficios están incluidos en todos los
+          planes: se eligen según tu aportación, tus objetivos y lo que los equipos pueden ofrecer.
+        </p>
+      </div>
+
+      <ol class="mt-12 grid gap-x-14 md:grid-cols-2">
+        {
+          beneficios.map(([t, d], i) => (
+            <li class="grid grid-cols-[3rem_1fr] gap-3 border-b border-line py-6">
+              <span class="font-[family-name:var(--font-mono)] text-sm text-amber">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3 class="text-lg font-bold">{t}</h3>
+                <p class="mt-1 text-muted">{d}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="mx-auto max-w-6xl px-5">
+      <SectionHead tag="// 02 Proceso" title="Cómo se arma una propuesta" />
+      <ol class="mt-12 grid gap-8 md:grid-cols-5">
+        {
+          pasos.map(([t, d], i) => (
+            <li class="border-t border-amber/50 pt-5">
+              <span class="font-[family-name:var(--font-mono)] text-sm text-amber">Paso 0{i + 1}</span>
+              <h3 class="mt-2 text-lg font-bold">{t}</h3>
+              <p class="mt-1 text-base text-muted">{d}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="mx-auto max-w-6xl px-5">
+      <SectionHead tag="// 03 Aliados" title="Patrocinadores y aliados actuales" lead="PLACEHOLDER. Aquí van los logos de las organizaciones que ya nos apoyan." />
+      <ul class="hairline-grid mt-12 grid-cols-2 md:grid-cols-4">
+        {
+          [1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+            <li class="cell grid h-32 place-items-center px-4 text-center font-[family-name:var(--font-mono)] text-xs uppercase tracking-wider text-muted">
+              Logo patrocinador {i}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="surface-hero section border-t border-line">
+    <div class="mx-auto max-w-6xl px-5">
+      <div class="glass flex flex-wrap items-center justify-between gap-6 p-8 md:p-10">
+        <div class="max-w-2xl">
+          <h2 class="text-2xl font-bold">Hablemos de una propuesta para tu organización</h2>
+          <p class="mt-3 text-muted">Sin compromiso. Te respondemos para agendar una llamada.</p>
+        </div>
+        <a href="/contacto?tipo=patrocinador" class="btn btn-primary">Contactar</a>
+      </div>
+    </div>
+  </section>
+</Layout>
