@@ -25,17 +25,21 @@ const { class: cls = '' } = Astro.props;
 </script>
 
 <style>
+  /* El SVG es solo plan B: queda oculto y solo aparece si no hay WebGL o falla la carga del 3D. */
   .robot3d .robot3d-fallback {
-    transition: opacity 0.3s;
+    display: none;
+  }
+  .robot3d.no-3d .robot3d-fallback {
+    display: block;
+  }
+  .robot3d.no-3d canvas,
+  .robot3d.no-3d [data-overlay] {
+    display: none;
   }
   .robot3d canvas,
   .robot3d [data-overlay] {
     opacity: 0;
     transition: opacity 0.6s;
-  }
-  .robot3d.is-3d .robot3d-fallback {
-    opacity: 0;
-    pointer-events: none;
   }
   .robot3d.is-3d canvas,
   .robot3d.is-3d [data-overlay] {

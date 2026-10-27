@@ -11,18 +11,11 @@ const C = {
 
 export function initRobot(root) {
   const probe = document.createElement('canvas');
-  if (!(probe.getContext('webgl2') || probe.getContext('webgl'))) return; // se queda el SVG de respaldo
-
-  const io = new IntersectionObserver(
-    (entries) => {
-      if (entries.some((e) => e.isIntersecting)) {
-        io.disconnect();
-        build(root).catch(() => {});
-      }
-    },
-    { rootMargin: '200px' },
-  );
-  io.observe(root);
+  if (!(probe.getContext('webgl2') || probe.getContext('webgl'))) {
+    root.classList.add('no-3d'); // plan B: dibujo SVG
+    return;
+  }
+  build(root).catch(() => root.classList.add('no-3d'));
 }
 
 async function build(root) {
